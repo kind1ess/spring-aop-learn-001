@@ -15,7 +15,7 @@ public interface AccountService {
      *
      * @return
      */
-    public List<Account> findAllAccount();
+    public List<Account> findAllAccount() throws Exception;
 
     /**
      * 根据id查询账户
@@ -23,28 +23,28 @@ public interface AccountService {
      * @param id
      * @return
      */
-    public Account findAccountById(Integer id);
+    public Account findAccountById(Integer id) throws Exception;
 
     /**
      * 保存账户
      *
      * @param account
      */
-    public void saveAccount(Account account);
+    public void saveAccount(Account account) throws Exception;
 
     /**
      * 更新账户
      *
      * @param account
      */
-    public void updateAccount(Account account);
+    public void updateAccount(Account account) throws Exception;
 
     /**
      * 删除账户
      *
      * @param id
      */
-    public void deleteAccountById(Integer id);
+    public void deleteAccountById(Integer id) throws Exception;
 
     /**
      * 转账
@@ -53,5 +53,5 @@ public interface AccountService {
      * @param targetName
      * @param money
      */
-    public void transfer(String sourceName, String targetName, Float money);
+    public void transfer(String sourceName, String targetName, Float money) throws Exception;
 }

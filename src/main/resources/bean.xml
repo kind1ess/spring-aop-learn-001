@@ -2,11 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-<!--    配置service-->
+    <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"></bean>
+    <!--    配置service-->
     <bean id="accountService" class="com.kind1ess.service.impl.AccountServiceImpl">
 <!--        set方法注入-->
         <property name="accountRepository" ref="accountRepository"></property>
-        <property name="transactionManager" ref="transactionManager"></property>
     </bean>
 <!--    配置repository-->
     <bean id="accountRepository" class="com.kind1ess.repository.impl.AccountRepositoryImpl">
@@ -33,5 +33,10 @@
 
     <bean id="transactionManager" class="com.kind1ess.utils.TransactionManager">
         <property name="connectionUtil" ref="connectionUtil"></property>
+    </bean>
+
+    <bean id="beanFactory" class="com.kind1ess.factory.BeanFactory">
+        <property name="accountService" ref="accountService"></property>
+        <property name="transactionManager" ref="transactionManager"></property>
     </bean>
 </beans>

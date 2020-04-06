@@ -5,6 +5,7 @@ import com.kind1ess.service.AccountService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,14 +21,19 @@ import java.util.List;
 public class AccountServiceTest {
 
     @Autowired
+    @Qualifier("proxyAccountService")
     private AccountService accountService;
 
     @Test
     public void testTransfer(){
-        accountService.transfer("ccc","bbb",500.0f);
-        List<Account> accountList = accountService.findAllAccount();
-        for (Account account : accountList) {
-            System.out.println(account);
+        try {
+            accountService.transfer("ccc","bbb",500.0f);
+            List<Account> accountList = accountService.findAllAccount();
+            for (Account account : accountList) {
+                System.out.println(account);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

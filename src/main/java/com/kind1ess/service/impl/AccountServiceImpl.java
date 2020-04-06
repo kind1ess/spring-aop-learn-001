@@ -13,112 +13,38 @@ public class AccountServiceImpl implements AccountService {
 
 
     private AccountRepository accountRepository;
-    private TransactionManager transactionManager;
-
-    public void setTransactionManager(TransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-    }
 
     public void setAccountRepository(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    public List<Account> findAllAccount() {
-        List<Account> accountList = null;
-        try {
-            //1.开启事务
-            transactionManager.beginTransaction();
-            //2.执行操作
-            accountList = accountRepository.findAllAccount();
-            //3.提交事务
-            transactionManager.commit();
-            //4.返回结果
-            return accountList;
-        } catch (Exception e) {
-            //回滚操作
-            transactionManager.rollBack();
-            throw new RuntimeException(e);
-        }finally {
-            //6.释放资源
-            transactionManager.close();
-        }
+    public List<Account> findAllAccount() throws Exception {
+        return accountRepository.findAllAccount();
     }
 
-    public Account findAccountById(Integer id) {
-        Account account = null;
-        try {
-            transactionManager.beginTransaction();
-            account = accountRepository.findAccountById(id);
-            transactionManager.commit();
-            return account;
-        } catch (Exception e) {
-            transactionManager.rollBack();
-            throw new RuntimeException(e);
-        }
-        finally {
-            transactionManager.close();
-        }
+    public Account findAccountById(Integer id) throws Exception {
+        return accountRepository.findAccountById(id);
     }
 
-    public void saveAccount(Account account) {
-        try {
-            transactionManager.beginTransaction();
-            if (accountRepository.saveAccount(account)) {
-                transactionManager.commit();
-                System.out.println("保存成功");
-            } else {
-                System.out.println("保存失败，账户已存在");
-            }
-        } catch (Exception e) {
-            transactionManager.rollBack();
-            e.printStackTrace();
-        }finally {
-            transactionManager.close();
-        }
+    public void saveAccount(Account account) throws Exception {
+        accountRepository.saveAccount(account);
     }
 
-    public void updateAccount(Account account) {
-
-        try {
-            transactionManager.beginTransaction();
-            if (accountRepository.updateAccount(account)) {
-                transactionManager.commit();
-                System.out.println("更新成功");
-            } else {
-                System.out.println("更新失败");
-            }
-        } catch (Exception e) {
-            transactionManager.rollBack();
-            e.printStackTrace();
-        }finally {
-            transactionManager.close();
-        }
+    public void updateAccount(Account account) throws Exception {
+        accountRepository.updateAccount(account);
     }
 
-    public void deleteAccountById(Integer id) {
-        try {transactionManager.beginTransaction();
-            if (accountRepository.deleteById(id)) {
-                transactionManager.commit();
-                System.out.println("删除成功");
-            } else {
-                System.out.println("删除失败，账户不存在");
-            }
-        } catch (Exception e) {
-            transactionManager.rollBack();
-            e.printStackTrace();
-        }finally {
-            transactionManager.close();
-        }
+    public void deleteAccountById(Integer id) throws Exception {
+        accountRepository.deleteById(id);
     }
 
     @Override
-    public void transfer(String sourceName, String targetName, Float money) {
-        if (sourceName == targetName){
+    public void transfer(String sourceName, String targetName, Float money) throws Exception {
+        System.out.println("transfer...");
+        if (sourceName.equals(targetName)){
             System.out.println("不能向自己转账");
             return;
         }
-        try {
-            transactionManager.beginTransaction();
             Account sourceAccount = accountRepository.findByName(sourceName);
             Account targetAccount = accountRepository.findByName(targetName);
             Float sourceMoney = sourceAccount.getMoney();
@@ -133,14 +59,7 @@ public class AccountServiceImpl implements AccountService {
             sourceAccount.setMoney(sourceMoney);
             targetAccount.setMoney(targetMoney);
             accountRepository.updateAccount(sourceAccount);
-            int i =1/0;
+//            int i =1/0;
             accountRepository.updateAccount(targetAccount);
-            transactionManager.commit();
-        } catch (Exception e) {
-            transactionManager.rollBack();
-            e.printStackTrace();
-        }finally {
-            transactionManager.close();
-        }
     }
 }
