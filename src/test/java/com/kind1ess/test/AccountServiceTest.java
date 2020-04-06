@@ -24,7 +24,7 @@ public class AccountServiceTest {
 
     @Test
     public void testTransfer(){
-        accountService.transfer("张三","ccc",500.0f);
+        accountService.transfer("ccc","bbb",500.0f);
         List<Account> accountList = accountService.findAllAccount();
         for (Account account : accountList) {
             System.out.println(account);

@@ -31,4 +31,8 @@ public class ConnectionUtil {
         }
         return connection;
     }
+
+    public void removeConnection(){
+        threadLocal.remove();
+    }
 }

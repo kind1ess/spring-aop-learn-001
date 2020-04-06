@@ -40,6 +40,7 @@ public class TransactionManager {
     public void close(){
         try {
             connectionUtil.getThreadConnection().close();
+            connectionUtil.removeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
