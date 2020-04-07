@@ -1,5 +1,6 @@
 package com.kind1ess.test;
 
+import com.kind1ess.config.AccountConfig;
 import com.kind1ess.model.Account;
 import com.kind1ess.service.AccountService;
 import org.junit.Test;
@@ -17,17 +18,20 @@ import java.util.List;
  * 单元测试
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:bean.xml")
+@ContextConfiguration(classes = AccountConfig.class)
 public class AccountServiceTest {
 
     @Autowired
-    @Qualifier("proxyAccountService")
     private AccountService accountService;
 
     @Test
     public void testTransfer(){
         try {
-            accountService.transfer("ccc","bbb",500.0f);
+            accountService.transfer("bbb","ccc",500.0f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
             List<Account> accountList = accountService.findAllAccount();
             for (Account account : accountList) {
                 System.out.println(account);

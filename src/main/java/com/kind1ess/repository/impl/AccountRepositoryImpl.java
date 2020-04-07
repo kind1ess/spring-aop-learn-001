@@ -9,19 +9,22 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository("accountRepository")
 public class AccountRepositoryImpl implements AccountRepository {
 
     private QueryRunner queryRunner;
     private ConnectionUtil connectionUtil;
 
+    @Autowired
     public void setQueryRunner(QueryRunner queryRunner) {
         this.queryRunner = queryRunner;
     }
 
+    @Autowired
     public void setConnectionUtil(ConnectionUtil connectionUtil) {
         this.connectionUtil = connectionUtil;
     }

@@ -11,6 +11,7 @@ import java.lang.reflect.Proxy;
 /**
  * 用于创建Service的代理对象的工厂
  */
+@Deprecated
 public class BeanFactory {
 
     private AccountService accountService;

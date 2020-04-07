@@ -6,14 +6,18 @@ import com.kind1ess.service.AccountService;
 import com.kind1ess.utils.TransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+@Service("accountService")
 public class AccountServiceImpl implements AccountService {
 
 
     private AccountRepository accountRepository;
 
+    @Autowired
     public void setAccountRepository(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
@@ -59,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
             sourceAccount.setMoney(sourceMoney);
             targetAccount.setMoney(targetMoney);
             accountRepository.updateAccount(sourceAccount);
-//            int i =1/0;
+            int i =1/0;
             accountRepository.updateAccount(targetAccount);
     }
 }
